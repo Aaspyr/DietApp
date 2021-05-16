@@ -12,7 +12,7 @@ import android.content.ContentValues;
 public class DBAdapter {
     /*------------*/
     private static final String databaseName = "dietapp";
-    private static final int databaseVersion = 11;
+    private static final int databaseVersion = 15;
 
     /*------------*/
     private final Context context;
@@ -34,8 +34,63 @@ public class DBAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db){
-            try {
-                //Create tables
+            try{
+                // Create tables
+                db.execSQL("CREATE TABLE IF NOT EXISTS users (" +
+                        " user_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        " user_email VARCHAR," +
+                        " user_password VARCHAR, " +
+                        " user_salt VARCHAR, " +
+                        " user_alias VARCHAR," +
+                        " user_dob DATE, " +
+                        " user_gender INT, " +
+                        " user_location VARHCAR, " +
+                        " user_height INT, " +
+                        " user_activity_level INT, " +
+                        " user_weight INT, " +
+                        " user_target_weight INT, " +
+                        " user_target_weight_level INT," +
+                        " user_last_seen TIME," +
+                        " user_note VARCHAR);");
+
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try{
+                db.execSQL("CREATE TABLE IF NOT EXISTS food_diary_cal_eaten (" +
+                        " cal_eaten_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        " cal_eaten_date DATE, " +
+                        " cal_eaten_meal_no INT, " +
+                        " cal_eaten_energy INT, " +
+                        " cal_eaten_proteins INT, " +
+                        " cal_eaten_carbs INT, " +
+                        " cal_eaten_fat INT);");
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try{
+                db.execSQL("CREATE TABLE IF NOT EXISTS food_diary (" +
+                        " fd_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        " fd_date DATE," +
+                        " fd_meal_number INT," +
+                        " fd_food_id INT," +
+                        " fd_serving_size DOUBLE," +
+                        " fd_serving_mesurment VARCHAR," +
+                        " fd_energy_calculated DOUBLE," +
+                        " fd_protein_calculated DOUBLE," +
+                        " fd_carbohydrates_calculated DOUBLE," +
+                        " fd_fat_calculated DOUBLE," +
+                        " fd_fat_meal_id INT);");
+
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try{
                 db.execSQL("CREATE TABLE IF NOT EXISTS categories (" +
                         " category_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                         " category_name VARCHAR," +
@@ -43,6 +98,11 @@ public class DBAdapter {
                         " category_icon VARCHAR," +
                         " category_note VARCHAR);");
 
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
                 db.execSQL("CREATE TABLE IF NOT EXISTS food (" +
                         " food_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         " food_name VARCHAR," +
@@ -68,8 +128,10 @@ public class DBAdapter {
                         " food_image_c VARCHAR," +
                         " food_notes VARCHAR);");
 
+
+
             }
-            catch (SQLException e){
+            catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -77,6 +139,9 @@ public class DBAdapter {
         @Override
         public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion){
 
+            db.execSQL("DROP TABLE IF EXISTS users");
+            db.execSQL("DROP TABLE IF EXISTS food_diary_cal_eaten");
+            db.execSQL("DROP TABLE IF EXISTS food_diary");
             db.execSQL("DROP TABLE IF EXISTS categories");
             db.execSQL("DROP TABLE IF EXISTS food");
             onCreate(db);
