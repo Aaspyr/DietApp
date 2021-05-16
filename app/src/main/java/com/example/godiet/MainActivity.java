@@ -2,6 +2,7 @@ package com.example.godiet;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -28,8 +29,38 @@ public class MainActivity extends AppCompatActivity {
         /* Database*/
         DBAdapter db = new DBAdapter(this);
         db.open();
+
+        /* Setup for food */
+        // Count rows in food
+        int numberRows = db.count("food");
+
+        if(numberRows < 1){
+            // Run setup
+            Toast.makeText(this, "Loading setup", Toast.LENGTH_LONG).show();
+            DBSetupInsert setupInsert = new DBSetupInsert(this);
+            setupInsert.insertAllCategories();
+            setupInsert.insertAllFood();
+            Toast.makeText(this, "Setup completed!", Toast.LENGTH_LONG).show();
+        }
+
+        /* Check if user table exist */
+
+        numberRows = db.count("users");
+        if(numberRows < 1){
+            // Sign up
+            Toast.makeText(this, "You are only few fields away from signing up...", Toast.LENGTH_LONG).show();
+           numberRows = db.count("users");
+           if(numberRows<1){
+               Toast.makeText(this, "You have to sign up...", Toast.LENGTH_LONG).show();
+               Intent i = new Intent(MainActivity.this, SignUp.class);
+               startActivity(i);
+           }
+
+        }
+
+        /*Close DB*/
         db.close();
 
-        Toast.makeText(this, "Dziala", Toast.LENGTH_SHORT).show();
+       //Toast.makeText(this, "Dziala", Toast.LENGTH_SHORT).show();
     }
 }
