@@ -24,6 +24,15 @@
         <item>Imperial</item>
     </string-array>
 
+    <string-array name="array_activity_levels">
+        <item>Little to no exercise</item>
+        <item>Light exercise (1-3 days per week)</item>
+        <item>Moderate exercise (3-5 days per week)</item>
+        <item>Heavy exercise (6-7 days per week)</item>
+        <item>Very heavy exercise (twice per day, extra heavy workouts)</item>
+
+    </string-array>
+
     <string-array name="array_months">
         <item>January</item>
         <item>February</item>
@@ -51,5 +60,8 @@
     <string name="november">November</string>
     <string name="december">December</string>
     <string name="blank"> </string>
+
+    <string name="sign_up">Sign Up</string>
+
 
 </resources>
