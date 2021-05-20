@@ -164,6 +164,35 @@ public class DBAdapter {
       DBHelper.close();
     }
 
+    /*  Quote smart ------------------------------------------------------------ */
+    public String quoteSmart(String value){
+        // Is numeric?
+        boolean isNumeric = false;
+        try {
+            double myDouble = Double.parseDouble(value);
+            isNumeric = true;
+        }
+        catch(NumberFormatException nfe) {
+            System.out.println("Could not parse " + nfe);
+        }
+        if(isNumeric == false){
+            // Escapes special characters in a string for use in an SQL statement
+            if (value != null && value.length() > 0) {
+                value = value.replace("\\", "\\\\");
+                value = value.replace("'", "\\'");
+                value = value.replace("\0", "\\0");
+                value = value.replace("\n", "\\n");
+                value = value.replace("\r", "\\r");
+                value = value.replace("\"", "\\\"");
+                value = value.replace("\\x1a", "\\Z");
+            }
+        }
+
+        return value;
+    }
+
+
+
     /* Insert data */
     public void insert(String table, String fields, String values){
     db.execSQL("INSERT INTO " + table + "(" + fields + ") VALUES ("+ values +")") ;

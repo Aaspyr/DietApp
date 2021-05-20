@@ -20,8 +20,8 @@
     <string name="year">Year</string>
 
     <string-array name="array_measurements">
-        <item>Metric</item>
         <item>Imperial</item>
+        <item>Metric</item>
     </string-array>
 
     <string-array name="array_activity_levels">
