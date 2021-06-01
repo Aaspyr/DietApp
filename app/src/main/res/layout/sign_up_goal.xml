@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal"
+            android:text="DietApp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@null"
+            android:textSize="50dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            ></TextView>
+        <!-- Title END -->
+
+        <!-- Error handling -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/imageViewError"
+                    android:src="@drawable/ic_baseline_error_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textViewErrorMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Error!"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="8dp" />
+                <!--- @string/blank-->
+            </TableRow>
+        </TableLayout>
+        <!-- Table layout -->
+        <!-- Error handling -->
+
+        <!-- Table layout -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                >
+
+                <TextView
+                    android:id="@+id/textViewTargetWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/target_weight" />
+
+                <EditText
+                    android:id="@+id/editTextTextEmailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="3"
+                    android:inputType="textEmailAddress" />
+
+                <TextView
+                    android:id="@+id/textViewTargetMesurmentType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kg" />
+            </TableRow>
+        </TableLayout>
+        <!-- Target Weight END-->
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!-- Weekly goal -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:id="@+id/textViewIwantTo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/i_want_to" />
+
+                <Spinner
+                    android:id="@+id/spinnerWeeklyGoalA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/array_weekly_goals" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/textViewWeeklyGoal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weekly_goal" />
+
+                <Spinner
+                    android:id="@+id/spinnerWeeklyGoalB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/array_weekly_goals_kg"/>
+
+                <TextView
+                    android:id="@+id/textViewKgEachWeek"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kg_each_week" />
+            </TableRow>
+            <!-- Weekly goal END-->
+
+            <!-- Submit Button -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/blank"
+                    android:layout_marginTop="12dp" />
+
+                <Button
+                    android:id="@+id/buttonSubmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lets_go" />
+
+            </TableRow>
+            <!-- //Submit Button -->
+        </TableLayout>
+        <!-- Table layout -->
+
+
+    </LinearLayout>
+
+</ScrollView>

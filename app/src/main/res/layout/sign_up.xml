@@ -46,12 +46,12 @@
                     android:layout_height="wrap_content"
                     android:text="Error!"
                     android:layout_marginTop="2dp"
-                    android:layout_marginLeft="8dp"
-            /> <!--- @string/blank-->
-            </TableRow>
-        <!-- Error hanging -->
-             </TableLayout>
+                    android:layout_marginLeft="8dp" />
+                    <!--- @string/blank-->
+                </TableRow>
+            </TableLayout>
         <!-- Table layout -->
+        <!-- Error handling -->
 
         <TableLayout
             android:layout_width="match_parent"
@@ -328,8 +328,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                >>
+                android:layout_marginTop="12dp">
 
                 <TextView
                     android:id="@+id/textView11"

@@ -20,8 +20,8 @@
     <string name="year">Year</string>
 
     <string-array name="array_measurements">
-        <item>Imperial</item>
         <item>Metric</item>
+        <item>Imperial</item>
     </string-array>
 
     <string-array name="array_activity_levels">
@@ -62,6 +62,26 @@
     <string name="blank"> </string>
 
     <string name="sign_up">Sign Up</string>
+    <string name="weekly_goal">Weekly goal</string>
 
+    <string-array name="array_weekly_goals">
+        <item>lose weight</item>
+        <item>gain weight</item>
+    </string-array>
+
+    <string-array name="array_weekly_goals_kg">
+        <item>0.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>3.5</item>
+    </string-array>
+
+    <string name="kg_each_week">kg each week</string>
+    <string name="pounds_each_week">pounds each week</string>
+    <string name="i_want_to">I want to</string>
+    <string name="lets_go">Lets go!</string>
 
 </resources>

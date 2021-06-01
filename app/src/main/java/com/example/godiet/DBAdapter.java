@@ -12,7 +12,7 @@ import android.content.ContentValues;
 public class DBAdapter {
     /*------------*/
     private static final String databaseName = "dietapp";
-    private static final int databaseVersion = 15;
+    private static final int databaseVersion = 37;
 
     /*------------*/
     private final Context context;
@@ -34,6 +34,24 @@ public class DBAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db){
+            // Create table goal
+            try{
+                db.execSQL("CREATE TABLE IF NOT EXISTS goal (" +
+                " goal_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                " goal_current_weight INT, "+
+                " goal_target_weight INT, "+
+                " goal_weekly_goal VARCHAR, "+
+                " goal_date DATE, "+
+                " goal_energy INT, "+
+                " goal_proteins INT, "+
+                " goal_carbs INT, "+
+                " goal_fat INT, "+
+                " goal_notes VARCHAR);");
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             try{
                 // Create tables
                 db.execSQL("CREATE TABLE IF NOT EXISTS users (" +
@@ -47,9 +65,7 @@ public class DBAdapter {
                         " user_location VARHCAR, " +
                         " user_height INT, " +
                         " user_activity_level INT, " +
-                        " user_weight INT, " +
-                        " user_target_weight INT, " +
-                        " user_target_weight_level INT," +
+                        " user_mesurment VARCHAR, " +
                         " user_last_seen TIME," +
                         " user_note VARCHAR);");
 
@@ -139,6 +155,7 @@ public class DBAdapter {
         @Override
         public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion){
 
+            db.execSQL("DROP TABLE IF EXISTS goal");
             db.execSQL("DROP TABLE IF EXISTS users");
             db.execSQL("DROP TABLE IF EXISTS food_diary_cal_eaten");
             db.execSQL("DROP TABLE IF EXISTS food_diary");
@@ -188,10 +205,18 @@ public class DBAdapter {
             }
         }
 
+        value = "'" + value + "'";
+
         return value;
     }
 
+    public double quoteSmart(double value){
+        return value;
+    }
 
+    public int quoteSmart(int value){
+        return value;
+    }
 
     /* Insert data */
     public void insert(String table, String fields, String values){
