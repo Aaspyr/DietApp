@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
            }
 
         }
+        /*test update*/
+        long id = 1;
+        String value = "test@cydziala.pl";
+        db.update("users", "user_id", id, "user_email", value);
 
         /*Close DB*/
         db.close();

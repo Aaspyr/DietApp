@@ -3,8 +3,10 @@ package com.example.godiet;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import android.widget.Toast;
 import android.util.Log;
 import android.content.ContentValues;
@@ -12,7 +14,7 @@ import android.content.ContentValues;
 public class DBAdapter {
     /*------------*/
     private static final String databaseName = "dietapp";
-    private static final int databaseVersion = 37;
+    private static final int databaseVersion = 54;
 
     /*------------*/
     private final Context context;
@@ -40,12 +42,25 @@ public class DBAdapter {
                 " goal_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 " goal_current_weight INT, "+
                 " goal_target_weight INT, "+
+                " goal_i_want_to VARCHAR, "+
                 " goal_weekly_goal VARCHAR, "+
                 " goal_date DATE, "+
-                " goal_energy INT, "+
-                " goal_proteins INT, "+
-                " goal_carbs INT, "+
-                " goal_fat INT, "+
+                " goal_energy_bmr INT, "+
+                "goal_proteins_bmr INT, "+
+                " goal_carbs_bmr INT, "+
+                " goal_fat_bmr INT, "+
+                " goal_energy_diet INT, "+
+                " goal_proteins_diet INT, "+
+                " goal_carbs_diet INT, "+
+                " goal_fat_diet INT, "+
+                " goal_energy_with_activity INT, "+
+                " goal_proteins_with_activity INT, "+
+                " goal_carbs_with_activity INT, "+
+                " goal_fat_with_activity INT, "+
+                " goal_energy_with_activity_and_diet INT, "+
+                " goal_proteins_with_activity_and_diet INT, "+
+                " goal_carbs_with_activity_and_diet INT, "+
+                " goal_fat_with_activity_and_diet INT, "+
                 " goal_notes VARCHAR);");
             }
             catch (SQLException e) {
@@ -226,10 +241,73 @@ public class DBAdapter {
     /*Count */
     public int count(String table)
     {
+        try {
+            Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM " + table + "", null);
+            mCount.moveToFirst();
+            int count = mCount.getInt(0);
+            mCount.close();
+            return count;
+        }
+        catch(SQLiteException e){
+            return -1;
+        }
+
+    }
+    /*public int count(String table)
+    {
         Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM " + table + "", null);
         mCount.moveToFirst();
         int count= mCount.getInt(0);
         mCount.close();
         return count;
+    }*/
+
+    /* 10 Select ----------*/
+    public Cursor selectPrimaryKey(String table, String primaryKey, long rowId, String[] fields) throws SQLException {
+        /* Select example:
+        long row = 3;
+        String fields[] = new String[] {
+                "food_id",
+                "food_name",
+                "food_manufactor_name"
+        };
+        Cursor c = db.select("food", "food_id", row, fields);
+        displayRecordFromNotes(c);
+         */
+
+        Cursor mCursor = db.query(table, fields, primaryKey + "=" + rowId, null, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
     }
+    /* 11 Update ----------*/
+    public boolean update(String table, String primaryKey, long rowId, String field, String value) {
+        /* Update example:
+        long id = 1;
+        String value = "xxt@doesthiswork.com";
+        String valueSQL = db.quoteSmart(value);
+        db.update("users", "user_id", id, "user_email", valueSQL);
+         */
+
+        // Remove first and last value of value
+        value = value.substring(1, value.length()-1); // removes ' after running quote smart
+
+        ContentValues args = new ContentValues();
+        args.put(field, value);
+        return db.update(table, args, primaryKey + "=" + rowId, null) > 0;
+    }
+    public boolean update(String table, String primaryKey, long rowId, String field, double value) {
+        ContentValues args = new ContentValues();
+        args.put(field, value);
+        return db.update(table, args, primaryKey + "=" + rowId, null) > 0;
+    }
+    public boolean update(String table, String primaryKey, long rowId, String field, int value) {
+        ContentValues args = new ContentValues();
+        args.put(field, value);
+        return db.update(table, args, primaryKey + "=" + rowId, null) > 0;
+    }
+
+
+
 }

@@ -74,11 +74,11 @@
                     android:text="@string/target_weight" />
 
                 <EditText
-                    android:id="@+id/editTextTextEmailAddress"
+                    android:id="@+id/editTextTargetWeight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="3"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="number" />
 
                 <TextView
                     android:id="@+id/textViewTargetMesurmentType"
@@ -105,7 +105,7 @@
                     android:text="@string/i_want_to" />
 
                 <Spinner
-                    android:id="@+id/spinnerWeeklyGoalA"
+                    android:id="@+id/spinnerIWantTo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/array_weekly_goals" />
@@ -123,7 +123,7 @@
                     android:text="@string/weekly_goal" />
 
                 <Spinner
-                    android:id="@+id/spinnerWeeklyGoalB"
+                    android:id="@+id/spinnerWeeklyGoal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/array_weekly_goals_kg"/>
