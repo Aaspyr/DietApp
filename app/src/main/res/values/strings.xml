@@ -1,4 +1,7 @@
 <resources>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="app_name">GoDiet</string>
     <string name="email">Email</string>
     <string name="date_of_birth">Date of birth</string>
@@ -78,6 +81,16 @@
         <item>3</item>
         <item>3.5</item>
     </string-array>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="action_settings">Action Settings</string>
+    <string name="nav_header_desc">Nav Header</string>
+    <string name="nav_header_title">Nav Title</string>
+    <string name="nav_header_subtitle">Nav Subtitle</string>
+
+
 
     <string name="kg_each_week">kg each week</string>
     <string name="pounds_each_week">pounds each week</string>

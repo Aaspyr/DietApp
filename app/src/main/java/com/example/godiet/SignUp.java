@@ -83,7 +83,7 @@ public class SignUp extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-               // measurementChanged();
+                // measurementChanged();
             }
         });
 
@@ -207,7 +207,7 @@ public class SignUp extends AppCompatActivity {
         TextView textViewErrorMessage = (TextView)findViewById(R.id.textViewErrorMessage);
         String errorMessage = "";
 
-       // email
+        // email
         TextView textView = (TextView)findViewById(R.id.textView);
         EditText editTextTextEmailAddress = (EditText)findViewById(R.id.editTextTextEmailAddress);
         String stringEmail = editTextTextEmailAddress.getText().toString();
@@ -222,13 +222,13 @@ public class SignUp extends AppCompatActivity {
         Spinner spinnerDOBDay = (Spinner)findViewById(R.id.spinnerDOBDay);
         String stringDOBDay = spinnerDOBDay.getSelectedItem().toString();
         int intDOBDay = 0;
-          try {
+        try {
             intDOBDay = Integer.parseInt(stringDOBDay);
-              if(intDOBDay < 10){
-                  stringDOBDay = "0" + stringDOBDay;
-              }
-           }
-          catch(NumberFormatException nfe) {
+            if(intDOBDay < 10){
+                stringDOBDay = "0" + stringDOBDay;
+            }
+        }
+        catch(NumberFormatException nfe) {
             System.out.println("Could not parse " + nfe);
             errorMessage = "Please select a day for your birthday.";
         }

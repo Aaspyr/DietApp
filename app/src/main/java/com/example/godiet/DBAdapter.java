@@ -1,72 +1,71 @@
 package com.example.godiet;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import android.widget.Toast;
 import android.util.Log;
-import android.content.ContentValues;
+import android.widget.Toast;
 
 public class DBAdapter {
-    /*------------*/
-    private static final String databaseName = "dietapp";
+
+    /* 01 Variables ---------------------------------------- */
+    private static final String databaseName = "godiet";
     private static final int databaseVersion = 54;
 
-    /*------------*/
+    /* 02 Database variables ------------------------------- */
     private final Context context;
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
 
-    /*Class DbAdapter-------*/
+
+    /* 03 Class DbAdapter ---------------------------------- */
     public DBAdapter(Context ctx){
         this.context = ctx;
         DBHelper = new DatabaseHelper(context);
     }
 
-    /*DatabaseHelper------------*/
-
-    private static class DatabaseHelper extends SQLiteOpenHelper{
+    /* 04 DatabaseHelper ------------------------------------ */
+    private static class DatabaseHelper extends SQLiteOpenHelper {
         DatabaseHelper(Context context){
             super(context, databaseName, null, databaseVersion);
         }
 
         @Override
         public void onCreate(SQLiteDatabase db){
-            // Create table goal
             try{
+                // Create table goal
                 db.execSQL("CREATE TABLE IF NOT EXISTS goal (" +
-                " goal_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " goal_current_weight INT, "+
-                " goal_target_weight INT, "+
-                " goal_i_want_to VARCHAR, "+
-                " goal_weekly_goal VARCHAR, "+
-                " goal_date DATE, "+
-                " goal_energy_bmr INT, "+
-                "goal_proteins_bmr INT, "+
-                " goal_carbs_bmr INT, "+
-                " goal_fat_bmr INT, "+
-                " goal_energy_diet INT, "+
-                " goal_proteins_diet INT, "+
-                " goal_carbs_diet INT, "+
-                " goal_fat_diet INT, "+
-                " goal_energy_with_activity INT, "+
-                " goal_proteins_with_activity INT, "+
-                " goal_carbs_with_activity INT, "+
-                " goal_fat_with_activity INT, "+
-                " goal_energy_with_activity_and_diet INT, "+
-                " goal_proteins_with_activity_and_diet INT, "+
-                " goal_carbs_with_activity_and_diet INT, "+
-                " goal_fat_with_activity_and_diet INT, "+
-                " goal_notes VARCHAR);");
+                        " goal_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        " goal_current_weight INT, "+
+                        " goal_target_weight INT, "+
+                        " goal_i_want_to VARCHAR, "+
+                        " goal_weekly_goal VARCHAR, "+
+                        " goal_date DATE, "+
+                        " goal_energy_bmr INT, "+
+                        " goal_proteins_bmr INT, "+
+                        " goal_carbs_bmr INT, "+
+                        " goal_fat_bmr INT, "+
+                        " goal_energy_diet INT, "+
+                        " goal_proteins_diet INT, "+
+                        " goal_carbs_diet INT, "+
+                        " goal_fat_diet INT, "+
+                        " goal_energy_with_activity INT, "+
+                        " goal_proteins_with_activity INT, "+
+                        " goal_carbs_with_activity INT, "+
+                        " goal_fat_with_activity INT, "+
+                        " goal_energy_with_activity_and_diet INT, "+
+                        " goal_proteins_with_activity_and_diet INT, "+
+                        " goal_carbs_with_activity_and_diet INT, "+
+                        " goal_fat_with_activity_and_diet INT, "+
+                        " goal_notes VARCHAR);");
             }
             catch (SQLException e) {
                 e.printStackTrace();
             }
-
             try{
                 // Create tables
                 db.execSQL("CREATE TABLE IF NOT EXISTS users (" +
@@ -80,7 +79,7 @@ public class DBAdapter {
                         " user_location VARHCAR, " +
                         " user_height INT, " +
                         " user_activity_level INT, " +
-                        " user_mesurment VARCHAR, " +
+                        " user_mesurment VARHCAR, " +
                         " user_last_seen TIME," +
                         " user_note VARCHAR);");
 
@@ -168,7 +167,10 @@ public class DBAdapter {
         }
 
         @Override
-        public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion){
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+
+            // ! All tables that are going to be dropped need to be listed here
 
             db.execSQL("DROP TABLE IF EXISTS goal");
             db.execSQL("DROP TABLE IF EXISTS users");
@@ -179,24 +181,25 @@ public class DBAdapter {
             onCreate(db);
 
             String TAG = "Tag";
-            Log.w(TAG, "Upgrade db form version" + oldVersion + "to" + newVersion + " which will destroy all old data");
-        }
-    }
+            Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+                    + newVersion + ", which will destroy all old data");
 
-    /* Open database---------*/
+        } // end public void onUpgrade
+    } // DatabaseHelper
 
-    public DBAdapter open() throws SQLException{
-        db= DBHelper.getReadableDatabase();
+
+    /* 05 Open database --------------------------------------------------------- */
+    public DBAdapter open() throws SQLException {
+        db = DBHelper.getWritableDatabase();
         return this;
     }
 
-    /* close database---------*/
-
+    /* 06 Close database --------------------------------------------------------- */
     public void close() {
-      DBHelper.close();
+        DBHelper.close();
     }
 
-    /*  Quote smart ------------------------------------------------------------ */
+    /* 07 Quote smart ------------------------------------------------------------ */
     public String quoteSmart(String value){
         // Is numeric?
         boolean isNumeric = false;
@@ -224,21 +227,25 @@ public class DBAdapter {
 
         return value;
     }
-
-    public double quoteSmart(double value){
+    public double quoteSmart(double value) {
+        return value;
+    }
+    public int quoteSmart(int value) {
         return value;
     }
 
-    public int quoteSmart(int value){
-        return value;
-    }
-
-    /* Insert data */
+    /* 08 Insert data ------------------------------------------------------------ */
     public void insert(String table, String fields, String values){
-    db.execSQL("INSERT INTO " + table + "(" + fields + ") VALUES ("+ values +")") ;
+
+        try {
+            db.execSQL("INSERT INTO " + table +  "(" + fields + ") VALUES (" + values + ")");
+        }
+        catch(SQLiteException e){
+            System.out.println("Insert error: " + e.toString());
+        }
     }
 
-    /*Count */
+    /* 09 Count ------------------------------------------------------------------ */
     public int count(String table)
     {
         try {
@@ -253,16 +260,8 @@ public class DBAdapter {
         }
 
     }
-    /*public int count(String table)
-    {
-        Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM " + table + "", null);
-        mCount.moveToFirst();
-        int count= mCount.getInt(0);
-        mCount.close();
-        return count;
-    }*/
 
-    /* 10 Select ----------*/
+    /* 10 Select ----------------------------------------------------------------- */
     public Cursor selectPrimaryKey(String table, String primaryKey, long rowId, String[] fields) throws SQLException {
         /* Select example:
         long row = 3;
@@ -281,7 +280,8 @@ public class DBAdapter {
         }
         return mCursor;
     }
-    /* 11 Update ----------*/
+
+    /* 11 Update ----------------------------------------------------------------- */
     public boolean update(String table, String primaryKey, long rowId, String field, String value) {
         /* Update example:
         long id = 1;
@@ -307,7 +307,5 @@ public class DBAdapter {
         args.put(field, value);
         return db.update(table, args, primaryKey + "=" + rowId, null) > 0;
     }
-
-
 
 }

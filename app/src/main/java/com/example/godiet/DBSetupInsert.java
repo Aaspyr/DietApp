@@ -1,28 +1,36 @@
 package com.example.godiet;
 
-import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
+import android.widget.Toast;
 
 public class DBSetupInsert {
 
-    //Variables
+    /* Variables */
     private final Context context;
 
-    /*Public Class*/
+    /* Public Class ------------------------------------------------------ */
     public DBSetupInsert(Context ctx){
         this.context = ctx;
     }
 
-    /*Setup Insert to categories*/
-    public void setupInsertToCategories(String values){
-        DBAdapter db = new DBAdapter(context);
-        db.open();
-        db.insert("categories",
-                "category_id, category_name, category_parent_id, category_icon, category_note",
-                values);
-        db.close();
-    }
 
+
+    /* Setup Insert To Categories ----------------------------------------- */
+    // To insert to category table
+    public void setupInsertToCategories(String values){
+        try{
+            DBAdapter db = new DBAdapter(context);
+            db.open();
+            db.insert("categories",
+                    "category_id, category_name, category_parent_id, category_icon, category_note",
+                    values);
+            db.close();
+        }
+        catch (SQLiteException e){
+            // Toast.makeText(context, "Error; Could not insert categories.", Toast.LENGTH_SHORT).show();
+        }
+    }
     public void insertAllCategories(){
         setupInsertToCategories("NULL, 'Bread', '0', '', NULL");
         setupInsertToCategories("NULL, 'Bread', '1', '', NULL");
@@ -89,21 +97,27 @@ public class DBSetupInsert {
         setupInsertToCategories("NULL, 'Potato chips', '11', '', NULL");
     }
 
-    /*Setup Insert to Food*/
-    //Food to table
+
+
+
+    /* Setup Insert To Food ----------------------------------------------- */
+    // To insert food to food table
     public void setupInsertToFood(String values){
 
-        DBAdapter db = new DBAdapter(context);
-        db.open();
+        try {
+            DBAdapter db = new DBAdapter(context);
+            db.open();
+            db.insert("food",
+                    "food_id, food_name, food_manufactor_name, food_serving_size, food_serving_mesurment, food_serving_name_number, food_serving_name_word, food_energy, food_proteins, food_carbohydrates, food_fat, food_energy_calculated, food_proteins_calculated, food_carbohydrates_calculated, food_fat_calculated, food_user_id, food_barcode, food_category_id, food_thumb, food_image_a, food_image_b, food_image_c, food_notes",
+                    values);
+            db.close();
+        }
+        catch (SQLiteException e){
+            // Toast.makeText(context, "Error; Could not insert food.", Toast.LENGTH_SHORT).show();
+        }
 
-        db.insert("food",
-                "food_id, food_name, food_manufactor_name, food_serving_size, food_serving_mesurment, food_serving_name_number, food_serving_name_word, food_energy, food_proteins, food_carbohydrates, food_fat, food_energy_calculated, food_proteins_calculated, food_carbohydrates_calculated, food_fat_calculated, food_user_id, food_barcode, food_category_id, food_thumb, food_image_a, food_image_b, food_image_c, food_notes",
-                values);
-
-        db.close();
     }
-
-    /* Insert all food to database*/
+    // Insert all food into food database
     public void insertAllFood(){
         setupInsertToFood("NULL, 'Speltlompe med havre', 'Aulie', '26', 'gram', '1', 'stk', '122', '3.5', '23.4', '1', '32', '1', '6', '0', NULL, NULL, '2', 'aulie_speltlomper_med_havre_thumb.jpg', 'aulie_speltlomper_med_havre_a.jpg', 'aulie_speltlomper_med_havre_b.jpg', 'aulie_speltlomper_med_havre_c.jpg', NULL");
         setupInsertToFood("NULL, 'Havregryn lettkokt', 'Axa', '60', 'gram', '60', 'g', '389', '11.4', '63.1', '7.8', '233', '7', '38', '5', NULL, NULL, '3', 'axa_havregryn_lettkokt_thumb.jpg', 'axa_havregryn_lettkokt_a.jpg', 'axa_havregryn_lettkokt_b.jpg', 'axa_havregryn_lettkokt_c.jpg', NULL");
@@ -198,4 +212,6 @@ public class DBSetupInsert {
         setupInsertToFood("NULL, 'Micropop', 'Eldorado', '100', 'gram', '1', 'stk', '389', '7', '35', '19.1', '389', '7', '35', '19', NULL, NULL, '43', 'eldorado_micropop_thumb.jpg', 'eldorado_micropop_a.jpg', 'eldorado_micropop_b.jpg', 'eldorado_micropop_c.jpg', NULL");
         setupInsertToFood("NULL, 'Sørlandschips Spansk paprika med persille', 'Snacks', '200', 'gram', '1', 'pakke', '504', '7', '58', '26', '1 008', '14', '116', '52', NULL, NULL, '43', 'soorlandschips_spansk_paprika_med_persille_thumb.jpg', 'soorlandschips_spansk_paprika_med_persille_a.jpg', 'soorlandschips_spansk_paprika_med_persille_b.jpg', 'soorlandschips_spansk_paprika_med_persille_c.jpg', NULL");
     }
+
+
 }

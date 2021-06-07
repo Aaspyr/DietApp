@@ -28,18 +28,18 @@
             android:textColor="@color/black"
             ></TextView>
         <!-- Error hanging -->
-            <TableLayout
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                 <ImageView
-                     android:id="@+id/imageViewError"
-                     android:src="@drawable/ic_baseline_error_24"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content" />
-        
+                <ImageView
+                    android:id="@+id/imageViewError"
+                    android:src="@drawable/ic_baseline_error_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <TextView
                     android:id="@+id/textViewErrorMessage"
                     android:layout_width="match_parent"
@@ -47,9 +47,9 @@
                     android:text="Error!"
                     android:layout_marginTop="2dp"
                     android:layout_marginLeft="8dp" />
-                    <!--- @string/blank-->
-                </TableRow>
-            </TableLayout>
+                <!--- @string/blank-->
+            </TableRow>
+        </TableLayout>
         <!-- Table layout -->
         <!-- Error handling -->
 
@@ -322,8 +322,8 @@
                     android:layout_height="wrap_content"
                     android:entries="@array/array_activity_levels" />
             </TableRow>
-                <!-- //Activity Level -->
-                <!-- Submit Button -->
+            <!-- //Activity Level -->
+            <!-- Submit Button -->
 
             <TableRow
                 android:layout_width="match_parent"
@@ -351,50 +351,50 @@
 
 </ScrollView>
 
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="791dp"
-            android:fitsSystemWindows="true"
-            tools:ignore="MissingConstraints">
-
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                        <EditText
-                            android:id="@+id/mainPageTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:text="DietApp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginEnd="12dp"
-                            android:background="@null"
-                            android:textSize="50dp"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            />
-                <EditText
+                android:layout_height="791dp"
+                android:fitsSystemWindows="true"
+                tools:ignore="MissingConstraints">
 
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="DietApfgfgfgfgp"
-                    android:layout_marginEnd="12dp"
-                    android:background="@null"
-                    android:textSize="50dp"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toBottomOf="@+id/mainPageTitle"
-                    />
+                    android:layout_height="match_parent">
+                            <EditText
+                                android:id="@+id/mainPageTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:text="DietApp"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginTop="30dp"
+                                android:layout_marginEnd="12dp"
+                                android:background="@null"
+                                android:textSize="50dp"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                />
+                    <EditText
 
-            </LinearLayout>
-        </ScrollView>
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text="DietApfgfgfgfgp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@null"
+                        android:textSize="50dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@+id/mainPageTitle"
+                        />
+
+                </LinearLayout>
+            </ScrollView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
