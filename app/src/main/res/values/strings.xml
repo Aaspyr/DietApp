@@ -97,4 +97,12 @@
     <string name="i_want_to">I want to</string>
     <string name="lets_go">Lets go!</string>
 
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="goal">Goal</string>
+    <string name="categories">Categories</string>
+    <string name="food">Food</string>
+
+
+
 </resources>
