@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import android.app.Fragment;
 
+
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +22,12 @@ import com.google.android.material.navigation.NavigationView;
 
 import okhttp3.OkHttpClient;
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        CategoriesFragment.OnFragmentInteractionListener,
+        FoodFragment.OnFragmentInteractionListener,
+        GoalFragment.OnFragmentInteractionListener,
+        HomeFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +40,22 @@ public class MainActivity extends AppCompatActivity
 
         // Set title
         toolbar.setTitle("Diet");
+
+        /* Initialize fragment */
+        Fragment fragment = null;
+        Class fragmentClass = HomeFragment.class;
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
+
+        android.app.FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         /* Settings button */
         /*
@@ -134,20 +159,44 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment = null;
+        Class fragmentClass = null;
+
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            fragmentClass = HomeFragment.class;
         } else if (id == R.id.nav_profile) {
-
+            fragmentClass = ProfileFragment.class;
         } else if (id == R.id.nav_goal) {
-
+            fragmentClass = GoalFragment.class;
         } else if (id == R.id.nav_categories) {
-
+            fragmentClass = CategoriesFragment.class;
         } else if (id == R.id.nav_food) {
+            fragmentClass = FoodFragment.class;
+        }
 
+        // Try to add item to fragment
+        try{
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        // Try to show that content
+        FragmentManager fragmentManager = getFragmentManager();
+        try{
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Error: " + e.toString(), Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri){
+
     }
 }
