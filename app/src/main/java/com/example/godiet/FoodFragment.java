@@ -50,7 +50,7 @@ public class FoodFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    /*- On create ----------------------------------------------------------------- */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +58,8 @@ public class FoodFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        /* Set title */
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Food");
     }
 
     @Override

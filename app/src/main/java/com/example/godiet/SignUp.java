@@ -409,7 +409,7 @@ public class SignUp extends AppCompatActivity {
             //Input for users
             String stringInput = "NULL, " + stringEmailSQL + "," + dateOfBirthSQL + "," + stringGenderSQL + "," + heightCmSQL + "," + intActivityLevelSQL + "," + stringMesurmentSQL;
             db.insert("users",
-                    "user_id, user_email, user_dob, user_gender, user_height, user_activity_level, user_mesurment", stringInput);
+                    "_id, user_email, user_dob, user_gender, user_height, user_activity_level, user_mesurment", stringInput);
 
             //Input for goal
             DateFormat df1 = new SimpleDateFormat("yyyy/MM/dd");
@@ -424,7 +424,7 @@ public class SignUp extends AppCompatActivity {
 
             stringInput = "NULL, " + doubleWeightSQL + "," + goalDateSQL;
             db.insert("goal",
-                    "goal_id, goal_current_weight, goal_date",
+                    "_id, goal_current_weight, goal_date",
                     stringInput);
             db.close();
 

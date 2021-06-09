@@ -79,13 +79,13 @@ public class SignUpGoal extends AppCompatActivity {
             long goalID = 1;
 
             double doubleTargetWeightSQL = db.quoteSmart(doubleTargetWeight);
-            db.update("goal", "goal_id", goalID, "goal_target_weight", doubleTargetWeightSQL);
+            db.update("goal", "_id", goalID, "goal_target_weight", doubleTargetWeightSQL);
 
             int intIWantToSQL = db.quoteSmart(intIWantTo);
-            db.update("goal", "goal_id", goalID, "goal_i_want_to", intIWantToSQL);
+            db.update("goal", "_id", goalID, "goal_i_want_to", intIWantToSQL);
 
             String stringWeeklyGoalSQL = db.quoteSmart(stringWeeklyGoal);
-            db.update("goal", "goal_id", goalID, "goal_weekly_goal", stringWeeklyGoalSQL);
+            db.update("goal", "_id", goalID, "goal_weekly_goal", stringWeeklyGoalSQL);
 
         }
 
@@ -95,13 +95,13 @@ public class SignUpGoal extends AppCompatActivity {
             // Get row number one from users
             long rowID = 1;
             String fields[] = new String[] {
-                    "user_id",
+                    "_id",
                     "user_dob",
                     "user_gender",
                     "user_height",
                     "user_activity_level"
             };
-            Cursor c = db.selectPrimaryKey("users", "user_id", rowID, fields);
+            Cursor c = db.select("users", fields, "_id", rowID);
             String stringUserDob = c.getString(1);
             String stringUserGender  = c.getString(2);
             String stringUserHeight = c.getString(3);
@@ -174,7 +174,7 @@ public class SignUpGoal extends AppCompatActivity {
             bmr = Math.round(bmr);
             long goalID = 1;
             double energyBmrSQL = db.quoteSmart(bmr);
-            db.update("goal", "goal_id", goalID, "goal_energy_bmr", energyBmrSQL);
+            db.update("goal", "_id", goalID, "goal_energy_bmr", energyBmrSQL);
             //Toast.makeText(this, "BMR before activity: " + bmr, Toast.LENGTH_LONG).show();
 
             // Proteins, carbs and fat with BMR
@@ -188,9 +188,9 @@ public class SignUpGoal extends AppCompatActivity {
             double proteinsBmrSQL = db.quoteSmart(proteinsBmr);
             double carbsBmrSQL = db.quoteSmart(carbsBmr);
             double fatBmrQL = db.quoteSmart(fatBmr);
-            db.update("goal", "goal_id", goalID, "goal_proteins_bmr", proteinsBmrSQL);
-            db.update("goal", "goal_id", goalID, "goal_carbs_bmr", carbsBmrSQL);
-            db.update("goal", "goal_id", goalID, "goal_fat_bmr", fatBmrQL);
+            db.update("goal", "_id", goalID, "goal_proteins_bmr", proteinsBmrSQL);
+            db.update("goal", "_id", goalID, "goal_carbs_bmr", carbsBmrSQL);
+            db.update("goal", "_id", goalID, "goal_fat_bmr", fatBmrQL);
 
             /* 2: Diet */
             // Loose or gain weight?
@@ -218,7 +218,7 @@ public class SignUpGoal extends AppCompatActivity {
 
             // Update database
             double energyDietSQL = db.quoteSmart(energyDiet);
-            db.update("goal", "goal_id", goalID, "goal_energy_diet", energyDietSQL);
+            db.update("goal", "_id", goalID, "goal_energy_diet", energyDietSQL);
 
             // Proteins, carbs and fat diet
             // 20-25 % protein
@@ -231,9 +231,9 @@ public class SignUpGoal extends AppCompatActivity {
             double proteinsDietSQL = db.quoteSmart(proteinsDiet);
             double carbsDietSQL = db.quoteSmart(carbsDiet);
             double fatDietQL = db.quoteSmart(fatDiet);
-            db.update("goal", "goal_id", goalID, "goal_proteins_diet", proteinsDietSQL);
-            db.update("goal", "goal_id", goalID, "goal_carbs_diet", carbsDietSQL);
-            db.update("goal", "goal_id", goalID, "goal_fat_diet", fatDietQL);
+            db.update("goal", "_id", goalID, "goal_proteins_diet", proteinsDietSQL);
+            db.update("goal", "_id", goalID, "goal_carbs_diet", carbsDietSQL);
+            db.update("goal", "_id", goalID, "goal_fat_diet", fatDietQL);
 
 
             /* 3: With activity */
@@ -256,7 +256,7 @@ public class SignUpGoal extends AppCompatActivity {
             }
             energyWithActivity = Math.round(energyWithActivity);
             double energyWithActivitySQL = db.quoteSmart(energyWithActivity);
-            db.update("goal", "goal_id", goalID, "goal_energy_with_activity", energyWithActivitySQL);
+            db.update("goal", "_id", goalID, "goal_energy_with_activity", energyWithActivitySQL);
             //Toast.makeText(this, "BMR after activity: " + bmr, Toast.LENGTH_LONG).show();
 
             // Proteins, carbs and fat diet
@@ -270,9 +270,9 @@ public class SignUpGoal extends AppCompatActivity {
             double proteinsWithActivitySQL = db.quoteSmart(proteinsDiet);
             double carbsWithActivitySQL = db.quoteSmart(carbsDiet);
             double fatWithActivityQL = db.quoteSmart(fatDiet);
-            db.update("goal", "goal_id", goalID, "goal_proteins_with_activity", proteinsWithActivitySQL);
-            db.update("goal", "goal_id", goalID, "goal_carbs_with_activity", carbsWithActivitySQL);
-            db.update("goal", "goal_id", goalID, "goal_fat_with_activity", fatWithActivityQL);
+            db.update("goal", "_id", goalID, "goal_proteins_with_activity", proteinsWithActivitySQL);
+            db.update("goal", "_id", goalID, "goal_carbs_with_activity", carbsWithActivitySQL);
+            db.update("goal", "_id", goalID, "goal_fat_with_activity", fatWithActivityQL);
 
 
 
@@ -293,7 +293,7 @@ public class SignUpGoal extends AppCompatActivity {
 
             // Update database
             double energyWithActivityAndDietSQL = db.quoteSmart(energyWithActivityAndDiet);
-            db.update("goal", "goal_id", goalID, "goal_energy_with_activity_and_diet", energyWithActivityAndDietSQL);
+            db.update("goal", "_id", goalID, "goal_energy_with_activity_and_diet", energyWithActivityAndDietSQL);
 
 
             // Calcualte proteins
@@ -307,9 +307,9 @@ public class SignUpGoal extends AppCompatActivity {
             double proteinsSQL = db.quoteSmart(proteins);
             double carbsSQL = db.quoteSmart(carbs);
             double fatSQL = db.quoteSmart(fat);
-            db.update("goal", "goal_id", goalID, "goal_proteins_with_activity_and_diet", proteinsSQL);
-            db.update("goal", "goal_id", goalID, "goal_carbs_with_activity_and_diet", carbsSQL);
-            db.update("goal", "goal_id", goalID, "goal_fat_with_activity_and_diet", fatSQL);
+            db.update("goal", "_id", goalID, "goal_proteins_with_activity_and_diet", proteinsSQL);
+            db.update("goal", "_id", goalID, "goal_carbs_with_activity_and_diet", carbsSQL);
+            db.update("goal", "_id", goalID, "goal_fat_with_activity_and_diet", fatSQL);
 
         } //  /* Calculate energy */
 
@@ -354,10 +354,10 @@ public class SignUpGoal extends AppCompatActivity {
         /* Get row number one from users */
         long rowID = 1;
         String fields[] = new String[] {
-                "user_id",
+                "_id",
                 "user_mesurment"
         };
-        Cursor c = db.selectPrimaryKey("users", "user_id", rowID, fields);
+        Cursor c = db.select("users", fields, "_id", rowID);
         String mesurment;
         mesurment = c.getString(1);
 
