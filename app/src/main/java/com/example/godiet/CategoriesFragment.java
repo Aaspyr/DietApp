@@ -1,5 +1,6 @@
 package com.example.godiet;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -18,8 +19,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
@@ -307,9 +306,10 @@ public class CategoriesFragment extends Fragment {
             // Give feedback
             Toast.makeText(getActivity(), "Category created", Toast.LENGTH_LONG).show();
 
-            // Move user back to correct design -  DOES NOT WORK ERROR
-       //     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        //    fragmentManager.beginTransaction().replace(R.id.flContent, new CategoriesFragment(), CategoriesFragment.class.getName()).commit();
+            // Move user back to correct design
+
+            FragmentManager fragmentManager = getActivity().getFragmentManager();
+           fragmentManager.beginTransaction().replace(R.id.flContent, new CategoriesFragment(), CategoriesFragment.class.getName()).commit();
 
 
         }
