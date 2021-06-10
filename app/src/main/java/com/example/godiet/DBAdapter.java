@@ -327,6 +327,16 @@ public class DBAdapter {
         }
         return mCursor;
     }
+    // Select with order
+    public Cursor select(String table, String[] fields, String whereClause, String whereCondition, String orderBy, String OrderMethod) throws SQLException
+    {
+        Cursor mCursor = db.query(table, fields, whereClause + "=" + whereCondition, null, null, null, orderBy + " " + OrderMethod, null);
+
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
 
     /* 11 Update ----------------------------------------------------------------- */
     public boolean update(String table, String primaryKey, long rowId, String field, String value) {

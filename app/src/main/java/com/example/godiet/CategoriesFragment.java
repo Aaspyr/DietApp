@@ -6,12 +6,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
@@ -37,6 +45,7 @@ public class CategoriesFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     /* Variables */
+    private View mainView;
     Cursor categoriesCursor;
 
     public CategoriesFragment() {
@@ -81,7 +90,53 @@ public class CategoriesFragment extends Fragment {
         // Populate the list of categories
         populateList("0", ""); // Parent
 
+        // Create menu
+        setHasOptionsMenu(true);
+
+
     }// onActivityCreated
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        mainView = inflater.inflate(R.layout.fragment_categories, container, false);
+        return mainView;
+    }
+    /*- set main view ------------------------------------------------------------------ */
+    private void setMainView(int id){
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mainView = inflater.inflate(id, null);
+        ViewGroup rootView = (ViewGroup) getView();
+        rootView.removeAllViews();
+        rootView.addView(mainView);
+    }
+
+
+    /*- on Create Options Menu --------------------------------------------------------- */
+    // Creating action icon on toolbar
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        //Inflate menu
+        ((MainActivity)getActivity()).getMenuInflater().inflate(R.menu.menu_categories, menu);
+
+    }
+
+    /*- on  Options Item Selected --------------------------------------------------------- */
+    // Action icon clicked in
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+
+        int id = menuItem.getItemId();
+
+        if (id == R.id.action_add) {
+            createNewCategory();
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+
+
 
     /*- populate List -------------------------------------------------------------- */
     public void populateList(String parentID, String parentName){
@@ -156,13 +211,114 @@ public class CategoriesFragment extends Fragment {
     }//listItemClicked
 
 
+    /*- Create new category ----------------------------------------------------------- */
+    public void createNewCategory() {
+        /* Change layout */
+        int id = R.layout.fragment_categories_add_edit;
+        setMainView(id);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_categories, container, false);
+        /* Database */
+        DBAdapter db = new DBAdapter(getActivity());
+        db.open();
+
+        /* Fill spinner with categories */
+        String fields[] = new String[] {
+                "_id",
+                "category_name",
+                "category_parent_id"
+        };
+        Cursor dbCursor = db.select("categories", fields, "category_parent_id", "0", "category_name", "ASC");
+
+        // Creating array
+        int dbCursorCount = dbCursor.getCount();
+        String[] arraySpinnerCategories = new String[dbCursorCount+1];
+
+        // This is parent
+        arraySpinnerCategories[0] = "-";
+
+        // Convert Cursor to String
+        for(int x=1;x<dbCursorCount+1;x++){
+            arraySpinnerCategories[x] = dbCursor.getString(1).toString();
+            dbCursor.moveToNext();
+        }
+        // Populate spinner
+        Spinner spinnerParent = (Spinner) getActivity().findViewById(R.id.spinnerCategoryParent);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, arraySpinnerCategories);
+        spinnerParent.setAdapter(adapter);
+
+        /* SubmitButton listener */
+        Button buttonHome = (Button)getActivity().findViewById(R.id.buttonCategoriesSubmit);
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewCategorySubmitOnClick();
+            }
+        });
+
+        /* Close db */
+        db.close();
     }
+
+    /*- Create new category Submit on click ----------------------------------------------- */
+    public void createNewCategorySubmitOnClick() {
+        /* Database */
+        DBAdapter db = new DBAdapter(getActivity());
+        db.open();
+        // Error?
+        int error = 0;
+
+        // Name
+        EditText editTextName = (EditText)getActivity().findViewById(R.id.editTextName);
+        String stringName = editTextName.getText().toString();
+        if(stringName.equals("")){
+            Toast.makeText(getActivity(), "Please fill in a name.", Toast.LENGTH_SHORT).show();
+            error = 1;
+        }
+        // Parent
+        Spinner spinner = (Spinner)getActivity().findViewById(R.id.spinnerCategoryParent);
+        String stringSpinnerCategoryParent = spinner.getSelectedItem().toString();
+        String parentID;
+        if(stringSpinnerCategoryParent.equals("-")){
+            parentID = "0";
+        }
+        else{
+            // Find we want to find parent ID from the text
+            String stringSpinnerCategoryParentSQL = db.quoteSmart(stringSpinnerCategoryParent);
+            String fields[] = new String[] {
+                    "_id",
+                    "category_name",
+                    "category_parent_id"
+            };
+            Cursor findParentID = db.select("categories", fields, "category_name", stringSpinnerCategoryParentSQL);
+            parentID = findParentID.getString(0).toString();
+
+        }
+
+        if(error == 0){
+            // Ready variables
+            String stringNameSQL = db.quoteSmart(stringName);
+            String parentIDSQL = db.quoteSmart(parentID);
+
+            // Insert into database
+            String input = "NULL, " + stringNameSQL + ", " + parentIDSQL;
+            db.insert("categories", "_id, category_name, category_parent_id", input);
+
+            // Give feedback
+            Toast.makeText(getActivity(), "Category created", Toast.LENGTH_LONG).show();
+
+            // Move user back to correct design -  DOES NOT WORK ERROR
+       //     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        //    fragmentManager.beginTransaction().replace(R.id.flContent, new CategoriesFragment(), CategoriesFragment.class.getName()).commit();
+
+
+        }
+
+        /* Close db */
+        db.close();
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
